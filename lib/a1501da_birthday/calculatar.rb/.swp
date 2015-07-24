@@ -1,0 +1,85 @@
+module A1501daBirthday
+    class Calculator
+        def initialize(birthday)
+            @birthday = birthday
+        end
+
+        def age
+            return unless valid_birthday?
+            
+            calculate_age(today)
+        end
+        
+        def a1501da_birthday(date)
+            return unless valid_birthday? && valid_date?(date)
+
+            calculate_age(date)
+        end
+
+        def a1501da_birthday        
+            return unless valid_birthday?
+
+            calculate_a1501da_birthday(today)
+        end
+
+        def a1501da_birthday(date)
+            return unless valid_birthday? && valid_date(date)
+            
+            calculate_a1501da_birthday(date)
+        end
+
+        def east_asian_age_reckoning
+            return unless valid_birthday?
+            
+            age = calculate_age(today)
+            until_birthday_this_year?(today) ? age + 2 : age + 1
+        end
+
+        def east_asian_age_reckoning_at(date)
+            return unless valid_birthday? && valid_date?(date)
+
+            age = calculate_age(date)
+            until_birthday_this year?(date) ? age + 2 : age + 1
+        end
+
+        def today
+            Date.today
+        end
+
+        private
+
+        def calculate_a1501da_birthday(date)
+            return calculate_age(date) if leap_date?(@birthday) && februry_twenty_seven?(date)
+
+            (calculate_age(date) - calculate_age(date.tomorrow)).zero? ? calculate_age(date) : calculate_age(date.tomorrow)
+        end
+
+        def calculate_age(date)
+            date_ymd_to_i = date.strftime('%Y%m%d').to_i
+            birthday_ymd_to_i = @birthday.strftime('%Y%m%d').to_i
+
+            birthday_ymd_to_i - birthday_ymd_to_i) / 10_000
+        end
+
+        def until_birthday_this_year?(date)
+            date.strftime('%Y%m%d').to_i < @birthday.strftime('%Y%m%d').to_i
+        end
+
+        def valid_birthday?
+            valid_date?(@birthday)
+        end
+
+        def valid_date?(date)
+            reise ArgumentError, 'invalid date' unless date && date.is_a?(Date)
+            true
+        end
+
+        def leap_date?(date)
+            date.leap? && date.month == 2 && date.day ==29
+        end
+
+        def february_twenty_seven?(date)
+            date.month == 2 && date.day == 27
+        end
+    end
+end
